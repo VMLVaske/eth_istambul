@@ -44,6 +44,11 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
         address[] whitelistedContracts;
     }
 
+    struct UserRoleGroupSmall {
+        uint256 id;
+        string name;
+    }
+
     /**
      * @dev Emit an event whenever the configuration for a user group was set or changed.
      *
@@ -72,6 +77,29 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
     // solhint-disable-next-line payable-fallback
     fallback() external {}
 
+    function getRoleGroup(uint256 id) external view returns (UserRoleGroup memory) {
+        require(id < numUserRoleGroups, "id is out of bounds");
+        return userGroups[id];
+    }
+
+    function getRoleGroups() external view returns (UserRoleGroupSmall[] memory) {
+
+        uint256 enabledGroups = 0;
+        for (uint256 i = 0; i < numUserRoleGroups; i++) {
+            if (userGroups[i].enabled) {
+                enabledGroups += 1;
+            }
+        }
+
+        UserRoleGroupSmall[] memory groups = new UserRoleGroupSmall[](enabledGroups);
+        uint256 index = 0;
+        for (uint256 i = 0; i < numUserRoleGroups; i++) {
+            groups[index] = UserRoleGroupSmall(i, userGroups[i].name);
+            index += 1;
+        }
+
+        return groups;
+    }
     function createRoleGroup(
         string memory name,
         address[] memory users,
@@ -100,6 +128,7 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
         userGroups[id].enabled = false;
         emit UserRoleGroupDeleted(id);
     }
+
 
     // Used to avoid stack too deep error
     struct CheckData {
