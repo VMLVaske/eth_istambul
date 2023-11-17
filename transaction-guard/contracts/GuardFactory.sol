@@ -11,7 +11,7 @@ contract GuardFactory {
         string memory name
     ) public {
         RestrictedTransactionGuard guard = new RestrictedTransactionGuard();
-        guards.push(guard);
+        guards[safeAddress] = address(guard);
     }
 
     function getGuard(address safeAddress) public view returns (address) {
