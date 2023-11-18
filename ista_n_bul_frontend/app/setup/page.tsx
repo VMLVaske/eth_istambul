@@ -1,9 +1,19 @@
 "use client";
 
-import { Button, Divider } from "@nextui-org/react";
 import react, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { title, subtitle } from "@/components/primitives";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  Input,
+} from "@nextui-org/react";
+import { DeployTransactionGuardModal } from "@/components/deployTransactionGuardModal";
+import { ApplyTransactionGuardModal } from "@/components/applyTransactionGuardModal";
 
 function SetupPage() {
   const [address, setAddress] = useState("");
@@ -36,11 +46,11 @@ function SetupPage() {
       </div>
       <div>
         <span>Step 1: </span>
-        <Button>Deploy Transaction Guard</Button>
+        <DeployTransactionGuardModal />
       </div>
       <div>
         <span>Step 2: </span>
-        <Button>Apply Guard to your SAFE</Button>
+        <ApplyTransactionGuardModal />
       </div>
     </div>
   );
