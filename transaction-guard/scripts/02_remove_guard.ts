@@ -1,14 +1,11 @@
 import { ethers } from "ethers";
 import SafeApiKit from "@safe-global/api-kit";
 import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
+import constants from "./constants";
 
 require("dotenv").config();
 
 async function main() {
-  const safeAddress = ethers.utils.getAddress(
-    "0xE19541611E9B73Fed62ac70179F37b6b8c4adE37"
-  );
-
   const gnosisServiceUrl = (() => {
     switch (process.env.NETWORK) {
       case "goerli":
@@ -36,7 +33,7 @@ async function main() {
 
   const safeSdk = await Safe.create({
     ethAdapter,
-    safeAddress,
+    safeAddress: constants.SAFE_ADDRESS,
   });
 
   const abi = ["function setGuard(address)"];
@@ -47,7 +44,7 @@ async function main() {
 
   const safeTransaction = await safeSdk.createTransaction({
     safeTransactionData: {
-      to: safeAddress,
+      to: constants.SAFE_ADDRESS,
       data,
       value: "0",
     },
@@ -57,7 +54,7 @@ async function main() {
   const senderSignature = await safeSdk.signTransactionHash(safeTxHash);
 
   await safeService.proposeTransaction({
-    safeAddress,
+    safeAddress: constants.SAFE_ADDRESS,
     safeTransactionData: safeTransaction.data,
     safeTxHash,
     senderAddress: ethers.utils.getAddress(process.env.DEPLOYER_PUBLIC_KEY!),

@@ -2,17 +2,11 @@ import { ethers } from "ethers";
 import SafeApiKit from "@safe-global/api-kit";
 import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
 import * as transactionGuardArtifact from "../artifacts/contracts/TransactionGuard.sol/RestrictedTransactionGuard.json";
+import constants from "./constants";
 
 require("dotenv").config();
 
 async function main() {
-  const guardAddress = ethers.utils.getAddress(
-    "0x2ebfc00bd0fb222bfe31b637e885507de42768ff"
-  );
-  const safeAddress = ethers.utils.getAddress(
-    "0xE19541611E9B73Fed62ac70179F37b6b8c4adE37"
-  );
-
   const provider = ethers.getDefaultProvider(process.env.SEPOLIA_NODE_URL);
   const signer = new ethers.Wallet(process.env.DEPLOYER_PRIVATE_KEY!, provider);
 
@@ -44,12 +38,12 @@ async function main() {
 
   const safeSdk = await Safe.create({
     ethAdapter,
-    safeAddress,
+    safeAddress: constants.SAFE_ADDRESS,
   });
 
   console.log("sdks initialized");
   const transactionGuard = new ethers.Contract(
-    guardAddress,
+    constants.GUARD_ADDRESS,
     transactionGuardArtifact.abi,
     provider
   );
@@ -67,7 +61,7 @@ async function main() {
 
   const safeTransaction = await safeSdk.createTransaction({
     safeTransactionData: {
-      to: guardAddress,
+      to: constants.GUARD_ADDRESS,
       data,
       value: "0",
       // nonce: 5,
@@ -79,7 +73,7 @@ async function main() {
 
   console.log("transaction prepared");
   await safeService.proposeTransaction({
-    safeAddress,
+    safeAddress: constants.SAFE_ADDRESS,
     safeTransactionData: safeTransaction.data,
     safeTxHash,
     senderAddress: ethers.utils.getAddress(process.env.DEPLOYER_PUBLIC_KEY!!),
