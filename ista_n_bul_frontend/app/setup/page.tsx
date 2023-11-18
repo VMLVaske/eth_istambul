@@ -1,6 +1,6 @@
 "use client";
 
-import react, { useState } from "react";
+import react, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Modal,
@@ -15,17 +15,29 @@ import {
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import { DeployTransactionGuardModal } from "@/components/deployTransactionGuardModal";
 import { ApplyTransactionGuardModal } from "@/components/applyTransactionGuardModal";
+import * as Constants from "@/app/constants";
+import { ProgressBar } from "react-loader-spinner";
+import factoryAbi from "@/abis/guardFactory.json";
+import { BrowserProvider, ethers } from "ethers";
 
-function SetupPage() {
-  const router = useRouter();
+function Loading() {
+  return (
+    <ProgressBar
+      height="80"
+      width="80"
+      ariaLabel="progress-bar-loading"
+      wrapperStyle={{}}
+      wrapperClass="progress-bar-wrapper"
+      borderColor="#F4442E"
+      barColor="#51E5FF"
+    />
+  );
+}
 
+function SetupArea(props: { guardAddress: string }) {
+  console.log("guardAddress: " + props.guardAddress);
   return (
     <div>
-      <div>
-        This app helps you setting multiple user permissions for the different
-        owners of your SAFE. This uses SAFE's guard feature to restrict specific
-        users and give them a whitelist of things they can do on-chain.
-      </div>
       <div>
         Before we can start, we need to setup a{" "}
         <a
@@ -40,12 +52,56 @@ function SetupPage() {
       </div>
       <div>
         <span>Step 1: </span>
-        <DeployTransactionGuardModal />
+        <DeployTransactionGuardModal guardAddress={props.guardAddress} />
       </div>
       <div>
         <span>Step 2: </span>
         <ApplyTransactionGuardModal />
       </div>
+    </div>
+  );
+}
+
+function SetupPage() {
+  const router = useRouter();
+  const { sdk, connected, safe } = useSafeAppsSDK();
+
+  const [guardAddress, setGuardAddress] = useState<string | null>(null);
+
+  useEffect(() => {
+    const execute = async () => {
+      const constants = Constants.getConstants(safe.chainId);
+
+      if (window.ethereum) {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        const provider = new BrowserProvider(window.ethereum);
+
+        const factoryContract = new ethers.Contract(
+          constants.FACTORY_ADDRESS,
+          factoryAbi,
+          provider
+        );
+
+        const guard = await factoryContract.getGuard(safe.safeAddress);
+        setGuardAddress(guard);
+      }
+    };
+
+    execute();
+  }, [safe, guardAddress]);
+
+  return (
+    <div>
+      <div>
+        This app helps you setting multiple user permissions for the different
+        owners of your SAFE. This uses SAFE's guard feature to restrict specific
+        users and give them a whitelist of things they can do on-chain.
+      </div>
+      {guardAddress == null ? (
+        <Loading />
+      ) : (
+        <SetupArea guardAddress={guardAddress} />
+      )}
     </div>
   );
 }

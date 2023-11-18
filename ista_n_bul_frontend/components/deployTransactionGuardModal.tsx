@@ -20,7 +20,9 @@ import SafeApiKit from "@safe-global/api-kit";
 import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
 import * as Constants from "@/app/constants";
 
-export const DeployTransactionGuardModal = () => {
+export const DeployTransactionGuardModal = (props: {
+  guardAddress: string;
+}) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const { sdk, connected, safe } = useSafeAppsSDK();
@@ -32,7 +34,7 @@ export const DeployTransactionGuardModal = () => {
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const provider = new BrowserProvider(window.ethereum);
 
-      console.log(provider);
+      // console.log(provider);
       const factoryContract = new ethers.Contract(
         constants.FACTORY_ADDRESS,
         factoryAbi,
@@ -75,11 +77,22 @@ export const DeployTransactionGuardModal = () => {
     }
   };
 
+  const firstStepDone =
+    props.guardAddress !=
+    "0x0000000000000000000000000000000000000000000000000000000000000000";
   return (
     <span>
-      <Button color="primary" onPress={onOpen}>
+      <Button color="primary" onPress={onOpen} isDisabled={firstStepDone}>
         Deploy Transaction Guard
       </Button>
+      <span
+        style={{
+          marginLeft: "16px",
+          display: firstStepDone ? "inline" : "none",
+        }}
+      >
+        &#x2714; done
+      </span>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
