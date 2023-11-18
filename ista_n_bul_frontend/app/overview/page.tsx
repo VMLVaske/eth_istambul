@@ -22,9 +22,12 @@ import factoryAbi from "@/abis/guardFactory.json";
 import guardAbi from "@/abis/transactionGuard.json";
 import { BrowserProvider, ethers } from "ethers";
 
-function SetupPage() {
-  const [groupId, setGroupId] = useState("");
-  const router = useRouter();
+import { ethers } from "ethers";
+
+function OverviewPage(props: { contract: ethers.Contract }) {
+
+    const [groupId, setGroupId] = useState('');
+    const router = useRouter();
 
   const tmpGroupId = 721;
 
@@ -129,4 +132,4 @@ function SetupPage() {
   );
 }
 
-export default SetupPage;
+export default OverviewPage;
