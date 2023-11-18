@@ -47,48 +47,12 @@ function SetupArea(props: { guardAddress: string }) {
           transaction guard
         </a>{" "}
         to your safe. This happens in two steps: </div>
-        <div className="items-center justify-center">First, we need to deploy your
-        very own transaction guard.
-        <br />
-        <div className="py-4">
-          <span className={bold()}>Step 1: </span>
-          <DeployTransactionGuardModal guardAddress={props.guardAddress}/>
-        </div>
-      </div>
-      <div>
-        In the second step, we need to add the new
-        guard to your safe.
-        <br />
-        <div className="py-4"></div>
-        <span className={bold()}>Step 2: </span>
-        <ApplyTransactionGuardModal guardAddress={props.guardAddress}/>
-      </div>
-    </div>
-  );
-}
-
-
-function SetupPage() {
-  const router = useRouter();
-
-  return (
-    <div>
-      <div>
-        Before we can start, we need to setup a{" "}
-        <a
-          href="https://help.safe.global/en/articles/40809-what-is-a-transaction-guard"
-          target="_blank"
-        >
-          transaction guard
-        </a>{" "}
-        to your safe. This happens in two steps: </div>
-
       <div className="items-center justify-center">First, we need to deploy your
         very own transaction guard.
         <br />
         <div className="py-4">
           <span className={bold()}>Step 1: </span>
-          <DeployTransactionGuardModal guardAddress={props.guardAddress}/>
+          <DeployTransactionGuardModal guardAddress={props.guardAddress} />
         </div>
       </div>
       <div>
@@ -99,7 +63,7 @@ function SetupPage() {
         <span className={bold()}>Step 2: </span>
         <ApplyTransactionGuardModal guardAddress={props.guardAddress} />
       </div>
-    </div >
+    </div>
   );
 }
 
@@ -133,7 +97,6 @@ function SetupPage(props) {
 
   return (
     <div>
-      
       <div>
         This app helps you setting multiple user permissions for the different
         owners of your SAFE. This uses SAFE's guard feature to restrict specific
@@ -144,7 +107,7 @@ function SetupPage(props) {
       ) : (
         <SetupArea guardAddress={guardAddress} />
       )}
-    </div >
+      </div>
   );
 }
 
