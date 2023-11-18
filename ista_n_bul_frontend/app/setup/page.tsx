@@ -35,7 +35,6 @@ function Loading() {
 }
 
 function SetupArea(props: { guardAddress: string }) {
-  console.log("guardAddress: " + props.guardAddress);
   return (
     <div>
       <div>
@@ -56,13 +55,13 @@ function SetupArea(props: { guardAddress: string }) {
       </div>
       <div>
         <span>Step 2: </span>
-        <ApplyTransactionGuardModal />
+        <ApplyTransactionGuardModal guardAddress={props.guardAddress} />
       </div>
     </div>
   );
 }
 
-function SetupPage() {
+function SetupPage(props) {
   const router = useRouter();
   const { sdk, connected, safe } = useSafeAppsSDK();
 

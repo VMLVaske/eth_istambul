@@ -127,7 +127,7 @@ export default function Home() {
               userRoles,
             });
           } else {
-            return SetupPage();
+            return SetupPage({});
           }
         })()}
         <CreateUserRoleModal />
