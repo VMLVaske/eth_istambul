@@ -84,8 +84,8 @@ export const DeployTransactionGuardModal = (props: {
     "0x0000000000000000000000000000000000000000000000000000000000000000";
   return (
     <span>
-      <Button className="button" color="success" onPress={onOpen} isDisabled={firstStepDone}>
-        Deploy Transaction Guard
+      <Button className="button" color="success" onPress={onOpen}>
+        {firstStepDone ? "Redeploy Guard" : "Deploy Transaction Guard"}
       </Button>
       <span
         style={{
