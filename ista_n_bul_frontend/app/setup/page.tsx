@@ -2,16 +2,6 @@
 
 import react, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  useDisclosure,
-  Input,
-} from "@nextui-org/react";
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import { DeployTransactionGuardModal } from "@/components/deployTransactionGuardModal";
 import { ApplyTransactionGuardModal } from "@/components/applyTransactionGuardModal";

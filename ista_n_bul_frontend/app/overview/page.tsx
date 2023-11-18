@@ -5,14 +5,7 @@ import react, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { title, subtitle } from "@/components/primitives";
 
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@nextui-org/react";
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "@nextui-org/react";
 import { DeleteIcon } from "@/components/icons";
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import { CreateUserRoleModal } from "@/components/createUserRoleModal";
@@ -24,8 +17,8 @@ import { BrowserProvider, ethers } from "ethers";
 
 function OverviewPage(props: { contract: ethers.Contract }) {
 
-    const [groupId, setGroupId] = useState('');
-    const router = useRouter();
+  const router = useRouter();
+  const [groupId, setGroupId] = useState('');
 
   const tmpGroupId = 721;
 
