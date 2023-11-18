@@ -11,6 +11,9 @@ import { AddOwnerModal } from "@/components/addOwnerModal";
 import { DeleteContractModal } from "@/components/deleteContractModal";
 import { DeleteOwnerModal } from "@/components/deleteOwnerModal";
 import { ethers } from "ethers";
+import * as Constants from "@/app/constants";
+import factoryAbi from "@/abis/guardFactory.json";
+import guardAbi from "@/abis/transactionGuard.json";
 
 import { allowedContractsColumns, allowedUsersColumns } from "./tableColumns";
 
