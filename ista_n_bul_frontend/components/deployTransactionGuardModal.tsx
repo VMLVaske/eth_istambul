@@ -28,7 +28,7 @@ export const DeployTransactionGuardModal = (props: {
   const { sdk, connected, safe } = useSafeAppsSDK();
 
   const startTransaction = async (safe: any) => {
-    const constants = Constants.getConstants(safe.chainId);
+    const constants = getConstants(safe.chainId);
 
     if (window.ethereum) {
       await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -68,7 +68,9 @@ export const DeployTransactionGuardModal = (props: {
       // console.log(safeSdk);
       // Returns a hash to identify the Safe transaction
       // const transaction = sdk.safe.
-      const safeTxHash: string = await sdk.txs.send({ txs });
+      console.log("Sending tx now!")
+      const safeTxHash = await sdk.txs.send({ txs });
+      console.log("Tx sent: ", safeTxHash);
 
       // const deployTransactionGuard =
       //   await factoryContract.populateTransaction.createGuard(
@@ -82,7 +84,7 @@ export const DeployTransactionGuardModal = (props: {
     "0x0000000000000000000000000000000000000000000000000000000000000000";
   return (
     <span>
-      <Button color="primary" onPress={onOpen}>
+      <Button className="button" color="success" onPress={onOpen}>
         {firstStepDone ? "Redeploy Guard" : "Deploy Transaction Guard"}
       </Button>
       <span
@@ -100,7 +102,7 @@ export const DeployTransactionGuardModal = (props: {
               <ModalHeader className="flex flex-col gap-1">
                 Deploying Transaction Guard
               </ModalHeader>
-              <ModalBody>
+              <ModalBody className="modalbody">
                 <span>
                   This will propose a new Transaction to your SAFE to deploy the
                   guard, please execute it.
@@ -110,7 +112,7 @@ export const DeployTransactionGuardModal = (props: {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button color="primary" onPress={() => startTransaction(safe)}>
+                <Button className="button" color="success" onPress={() => startTransaction(safe)}>
                   Deploy
                 </Button>
               </ModalFooter>

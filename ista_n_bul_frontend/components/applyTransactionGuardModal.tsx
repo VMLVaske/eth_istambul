@@ -59,7 +59,7 @@ export const ApplyTransactionGuardModal = (props: { guardAddress: string }) => {
     "0x0000000000000000000000000000000000000000000000000000000000000000";
   return (
     <span>
-      <Button color="primary" onPress={onOpen} isDisabled={!firstStepDone}>
+      <Button className="button" color="success" onPress={onOpen} isDisabled={!firstStepDone}>
         Apply Guard to SAFE
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -69,7 +69,7 @@ export const ApplyTransactionGuardModal = (props: { guardAddress: string }) => {
               <ModalHeader className="flex flex-col gap-1">
                 Apply Transaction Guard to your SAFE
               </ModalHeader>
-              <ModalBody>
+              <ModalBody className="modalbody">
                 <span>
                   This will propose a new Transaction to your SAFE to actually
                   apply the new guard to your SAFE.
@@ -80,7 +80,8 @@ export const ApplyTransactionGuardModal = (props: { guardAddress: string }) => {
                   Cancel
                 </Button>
                 <Button
-                  color="primary"
+                  className="button"
+                  color="success"
                   onPress={() => startTransaction(safe, props.guardAddress)}
                 >
                   Apply

@@ -10,7 +10,7 @@ export const DeleteContractModal = () => {
 
     return (
         <span>
-            <Button color="danger" variant="light" onPress={onOpen}>Delete</Button>
+            <Button className="button" color="danger" variant="light" onPress={onOpen}>Delete</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
@@ -24,7 +24,7 @@ export const DeleteContractModal = () => {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Cancel
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <Button className="button" color="primary" onPress={onClose}>
                                     Delete
                                 </Button>
                             </ModalFooter>

@@ -5,9 +5,9 @@ import { Link } from "@nextui-org/link";
 
 import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
+import { title, subtitle, bold } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
-import { Button } from "@nextui-org/react";
+import { Button, TableColumn } from "@nextui-org/react";
 import { CreateUserRoleModal } from "@/components/createUserRoleModal";
 import { AddContractModal } from "@/components/addContractModal";
 import { AddOwnerModal } from "@/components/addOwnerModal";
@@ -19,34 +19,34 @@ import SetupPage from "@/app/setup/page";
 import OverviewPage from "@/app/overview/page";
 
 function noGuard() {
-  return (
-    <div>
-      <div>
-        This app helps you setting multiple user permissions for the different
-        owners of your SAFE. This uses SAFE's guard feature to restrict specific
-        users and give them a whitelist of things they can do on-chain.
-      </div>
-      <div>
-        Before we can start, we need to setup a{" "}
-        <a
-          href="https://help.safe.global/en/articles/40809-what-is-a-transaction-guard"
-          target="_blank"
-        >
-          transaction guard
-        </a>{" "}
-        to your safe. Please push the next button to do this.
-      </div>
-      <div>
-        <Button title="Install Transaction Guard" />
-      </div>
-    </div>
-  );
+	return (
+		<div>
+			<div>
+				This app helps you setting multiple user permissions for the different
+				owners of your SAFE. This uses SAFE's guard feature to restrict specific
+				users and give them a whitelist of things they can do on-chain.
+			</div>
+			<div>
+				Before we can start, we need to setup a{" "}
+				<a
+					href="https://help.safe.global/en/articles/40809-what-is-a-transaction-guard"
+					target="_blank"
+				>
+					transaction guard
+				</a>{" "}
+				to your safe. Please push the next button to do this.
+			</div>
+			<div>
+				<Button color="success" title="Install Transaction Guard" />
+			</div>
+		</div>
+	);
 }
 
 function GuardAvailable(props: {
-  provider: BrowserProvider;
-  guard: string;
-  userRoles: string[];
+	provider: BrowserProvider;
+	guard: string;
+	userRoles: string[];
 }) {
   return (
     <div>
@@ -112,12 +112,12 @@ export default function Home() {
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-lg text-center justify-center">
         <h1 className={title()}>An &nbsp;</h1>
-        <h1 className={title({ color: "violet" })}>EthIstanbul&nbsp;</h1>
+        <h1 className={title({ color: "green" })}>EthIstanbul&nbsp;</h1>
         <h1 className={title()}>Project</h1>
         <h2 className={subtitle({ class: "mt-4" })}>by jörg and valerie</h2>
         <div>safe address: {safe.safeAddress}</div>
       </div>
-      <div>
+      <div className="flex flex-col gap-4 py-8 items-center justify-center">
         {(() => {
           if (
             guardAddress !=
