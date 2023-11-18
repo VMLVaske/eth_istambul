@@ -74,6 +74,10 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
     mapping(uint256 => UserRoleGroup) public userGroups;
     uint256 public numUserRoleGroups = 0;
     
+    constructor(address safeAddress) public {
+        transferOwnership(safeAddress);
+    }
+
     /**
      * @dev taken from a guard example from the gnosis repo.
      *      To prevent a revert on fallback, we define it empty. This will avoid issues in case of a Safe upgrade

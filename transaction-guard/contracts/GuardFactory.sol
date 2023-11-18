@@ -9,7 +9,7 @@ contract GuardFactory {
     function createGuard(
         address safeAddress
     ) public {
-        RestrictedTransactionGuard guard = new RestrictedTransactionGuard();
+        RestrictedTransactionGuard guard = new RestrictedTransactionGuard(safeAddress);
         guards[safeAddress] = address(guard);
     }
 

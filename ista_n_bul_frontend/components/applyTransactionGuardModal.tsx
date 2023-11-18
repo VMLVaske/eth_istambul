@@ -49,6 +49,7 @@ export const ApplyTransactionGuardModal = (props: { guardAddress: string }) => {
       ];
 
       const safeTxHash: string = await sdk.txs.send({ txs });
+
     }
   };
 

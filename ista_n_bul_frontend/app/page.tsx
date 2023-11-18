@@ -16,6 +16,7 @@ import { ethers, BrowserProvider } from "ethers";
 import React, { useEffect, useState } from "react";
 import safeAbi from "../abis/gnosisSafe.json";
 import SetupPage from "@/app/setup/page";
+import OverviewPage from "@/app/overview/page";
 
 function noGuard() {
   return (
@@ -49,6 +50,7 @@ function GuardAvailable(props: {
 }) {
   return (
     <div>
+      <div>Guard Address: {props.guard}</div>
       <h2>User Roles</h2>
       {props.userRoles.map((userRole) => (
         <li>{userRole}</li>
@@ -121,13 +123,9 @@ export default function Home() {
             guardAddress !=
             "0x0000000000000000000000000000000000000000000000000000000000000000"
           ) {
-            return GuardAvailable({
-              provider: provider!,
-              guard: guardAddress,
-              userRoles,
-            });
+            return <OverviewPage />;
           } else {
-            return SetupPage({});
+            return <SetupPage />;
           }
         })()}
         <CreateUserRoleModal />

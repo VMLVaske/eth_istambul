@@ -16,22 +16,12 @@ import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import { DeployTransactionGuardModal } from "@/components/deployTransactionGuardModal";
 import { ApplyTransactionGuardModal } from "@/components/applyTransactionGuardModal";
 import * as Constants from "@/app/constants";
-import { ProgressBar } from "react-loader-spinner";
+import { InfinitySpin } from "react-loader-spinner";
 import factoryAbi from "@/abis/guardFactory.json";
 import { BrowserProvider, ethers } from "ethers";
 
 function Loading() {
-  return (
-    <ProgressBar
-      height="80"
-      width="80"
-      ariaLabel="progress-bar-loading"
-      wrapperStyle={{}}
-      wrapperClass="progress-bar-wrapper"
-      borderColor="#F4442E"
-      barColor="#51E5FF"
-    />
-  );
+  return <InfinitySpin width="200" color="#12FF80" />;
 }
 
 function SetupArea(props: { guardAddress: string }) {
@@ -62,7 +52,6 @@ function SetupArea(props: { guardAddress: string }) {
 }
 
 function SetupPage(props) {
-  const router = useRouter();
   const { sdk, connected, safe } = useSafeAppsSDK();
 
   const [guardAddress, setGuardAddress] = useState<string | null>(null);
