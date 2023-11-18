@@ -28,7 +28,7 @@ export const DeployTransactionGuardModal = (props: {
   const { sdk, connected, safe } = useSafeAppsSDK();
 
   const startTransaction = async (safe: any) => {
-    const constants = getConstants(safe.chainId);
+    const constants = Constants.getConstants(safe.chainId);
 
     if (window.ethereum) {
       await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -68,7 +68,7 @@ export const DeployTransactionGuardModal = (props: {
       // console.log(safeSdk);
       // Returns a hash to identify the Safe transaction
       // const transaction = sdk.safe.
-      console.log("Sending tx now!")
+      console.log("Sending tx now!");
       const safeTxHash = await sdk.txs.send({ txs });
       console.log("Tx sent: ", safeTxHash);
 
@@ -112,7 +112,11 @@ export const DeployTransactionGuardModal = (props: {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button className="button" color="success" onPress={() => startTransaction(safe)}>
+                <Button
+                  className="button"
+                  color="success"
+                  onPress={() => startTransaction(safe)}
+                >
                   Deploy
                 </Button>
               </ModalFooter>

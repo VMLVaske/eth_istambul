@@ -87,7 +87,7 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
     fallback() external {}
 
     function getRoleGroup(uint256 id) external view returns (UserRoleGroup memory) {
-        require(id < numUserRoleGroups, "id is out of bounds");
+        require(id <= numUserRoleGroups, "id is out of bounds");
         return userGroups[id];
     }
 
@@ -95,7 +95,7 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
 
         uint256 enabledGroups = 0;
         for (uint256 i = 0; i < numUserRoleGroups; i++) {
-            if (userGroups[i].enabled) {
+            if (userGroups[i+1].enabled) {
                 enabledGroups += 1;
             }
         }
@@ -103,7 +103,11 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
         UserRoleGroupSmall[] memory groups = new UserRoleGroupSmall[](enabledGroups);
         uint256 index = 0;
         for (uint256 i = 0; i < numUserRoleGroups; i++) {
-            groups[index] = UserRoleGroupSmall(i, userGroups[i].name);
+            if (!userGroups[i+1].enabled) {
+                continue;
+            }
+
+            groups[index] = UserRoleGroupSmall(i+1, userGroups[i+1].name);
             index += 1;
         }
 
@@ -123,6 +127,7 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
         for (uint256 i = 0; i < whitelistedContracts.length; i++) {
             group.whitelistedContracts.push(WhitelistedContract(whitelistedContracts[i].name, whitelistedContracts[i].contractAddress));
         }
+        
         emit UserRoleGroupSet(numUserRoleGroups, userGroups[numUserRoleGroups]);
 
     }
