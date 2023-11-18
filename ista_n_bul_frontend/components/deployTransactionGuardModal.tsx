@@ -18,9 +18,11 @@ import { BrowserProvider, ethers } from "ethers";
 import { BaseTransaction } from "@safe-global/safe-apps-sdk";
 import SafeApiKit from "@safe-global/api-kit";
 import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
-import {getConstants} from "@/app/constants";
+import * as Constants from "@/app/constants";
 
-export const DeployTransactionGuardModal = () => {
+export const DeployTransactionGuardModal = (props: {
+  guardAddress: string;
+}) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const { sdk, connected, safe } = useSafeAppsSDK();
@@ -32,38 +34,19 @@ export const DeployTransactionGuardModal = () => {
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const provider = new BrowserProvider(window.ethereum);
 
-      console.log(provider);
+      // console.log(provider);
       const factoryContract = new ethers.Contract(
         constants.FACTORY_ADDRESS,
         factoryAbi,
         provider
       );
 
-      console.log("Constants: ", constants);
-
-      const testAddr = "0xE2dF1CAB97737E5534FFDc873B9D507A89D59944"
-
-      console.log("Factory Address: ", constants.FACTORY_ADDRESS);
-      console.log("Factory Contract: ", factoryContract);
-      console.log("Safe address: ", safe.safeAddress)
-      console.log("Data: ", factoryContract.interface.encodeFunctionData("createGuard", [testAddr]));
-
-      /* const txs: BaseTransaction[] = [
-        {
-          to: constants.FACTORY_ADDRESS,
-          value: "0",
-          data: factoryContract.interface.encodeFunctionData("createGuard", [
-            safe.safeAddress,
-          ]),
-        },
-      ]; */
-
       const txs: BaseTransaction[] = [
         {
           to: constants.FACTORY_ADDRESS,
           value: "0",
           data: factoryContract.interface.encodeFunctionData("createGuard", [
-            "0xE2dF1CAB97737E5534FFDc873B9D507A89D59944",
+            safe.safeAddress,
           ]),
         },
       ];
@@ -96,11 +79,22 @@ export const DeployTransactionGuardModal = () => {
     }
   };
 
+  const firstStepDone =
+    props.guardAddress !=
+    "0x0000000000000000000000000000000000000000000000000000000000000000";
   return (
     <span>
-      <Button className="button" color="success" onPress={onOpen}>
+      <Button className="button" color="success" onPress={onOpen} isDisabled={firstStepDone}>
         Deploy Transaction Guard
       </Button>
+      <span
+        style={{
+          marginLeft: "16px",
+          display: firstStepDone ? "inline" : "none",
+        }}
+      >
+        &#x2714; done
+      </span>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (

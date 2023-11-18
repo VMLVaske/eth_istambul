@@ -60,7 +60,9 @@ function GuardAvailable(props: {
 export default function Home() {
   const { sdk, connected, safe } = useSafeAppsSDK();
   const [provider, setProvider] = useState<BrowserProvider | null>(null);
-  const [guardAddress, setGuardAddress] = useState("");
+  const [guardAddress, setGuardAddress] = useState(
+    "0x0000000000000000000000000000000000000000000000000000000000000000"
+  );
   const [userRoles, setUserRoles] = useState<string[]>([]);
 
   useEffect(() => {
@@ -82,7 +84,11 @@ export default function Home() {
             "0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8",
             1
           )
-          .catch(() => "");
+          .catch(
+            () =>
+              "0x0000000000000000000000000000000000000000000000000000000000000000"
+          );
+        // console.log(guard);
         setGuardAddress(guard);
 
         // if (guard != "") {
@@ -111,14 +117,17 @@ export default function Home() {
       </div>
       <div className="flex flex-col gap-4 py-8 items-center justify-center">
         {(() => {
-          if (guardAddress != "") {
+          if (
+            guardAddress !=
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
+          ) {
             return GuardAvailable({
               provider: provider!,
               guard: guardAddress,
               userRoles,
             });
           } else {
-            return SetupPage();
+            return SetupPage({});
           }
         })()}
         <CreateUserRoleModal />
