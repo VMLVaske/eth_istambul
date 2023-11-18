@@ -1,0 +1,27 @@
+div {
+  padding: 8px 0px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-body {
+  color: #fff;
+  padding: 16px;
+  text-align: start;
+}
