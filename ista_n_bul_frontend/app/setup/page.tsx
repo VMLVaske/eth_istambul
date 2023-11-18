@@ -12,18 +12,12 @@ import {
   useDisclosure,
   Input,
 } from "@nextui-org/react";
+import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import { DeployTransactionGuardModal } from "@/components/deployTransactionGuardModal";
 import { ApplyTransactionGuardModal } from "@/components/applyTransactionGuardModal";
 
 function SetupPage() {
-  const [address, setAddress] = useState("");
-  const [isValid, setIsValid] = useState(true);
   const router = useRouter();
-
-  const handleChange = (e: any) => {
-    const input = e.target.value;
-    setAddress(input);
-  };
 
   return (
     <div>

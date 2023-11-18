@@ -7,8 +7,7 @@ contract GuardFactory {
     mapping(address => address) private guards;
 
     function createGuard(
-        address safeAddress, 
-        string memory name
+        address safeAddress
     ) public {
         RestrictedTransactionGuard guard = new RestrictedTransactionGuard();
         guards[safeAddress] = address(guard);

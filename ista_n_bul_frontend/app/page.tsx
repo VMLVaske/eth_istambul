@@ -85,15 +85,15 @@ export default function Home() {
           .catch(() => "");
         setGuardAddress(guard);
 
-        if (guard != "") {
-          const guardContract = new ethers.Contract(
-            guardAddress,
-            safeAbi,
-            provider
-          );
-        }
+        // if (guard != "") {
+        //   const guardContract = new ethers.Contract(
+        //     guardAddress,
+        //     safeAbi,
+        //     provider
+        //   );
+        // }
         // TODO
-        setUserRoles(["test role"]);
+        // setUserRoles(["test role"]);
       }
     };
 

@@ -13,6 +13,9 @@ const config: HardhatUserConfig = {
       blockGasLimit: 100000000,
       gas: 100000000,
     },
+    local: {
+      url: "http://127.0.0.1:8545"
+    },
     goerli: {
       url: process.env.GOERLI_NODE_URL || "",
       accounts:

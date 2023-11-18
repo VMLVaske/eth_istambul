@@ -11,9 +11,69 @@ import {
   useDisclosure,
   Input,
 } from "@nextui-org/react";
+import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
+import { useEffect, useState } from "react";
+import factoryAbi from "../abis/guardFactory.json";
+import { BrowserProvider, ethers } from "ethers";
+import { BaseTransaction } from "@safe-global/safe-apps-sdk";
+import SafeApiKit from "@safe-global/api-kit";
+import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
+import * as Constants from "@/app/constants";
 
 export const DeployTransactionGuardModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const { sdk, connected, safe } = useSafeAppsSDK();
+
+  const startTransaction = async (safe: any) => {
+    const constants = Constants.getConstants(safe.chainId);
+
+    if (window.ethereum) {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      const provider = new BrowserProvider(window.ethereum);
+
+      console.log(provider);
+      const factoryContract = new ethers.Contract(
+        constants.FACTORY_ADDRESS,
+        factoryAbi,
+        provider
+      );
+
+      const txs: BaseTransaction[] = [
+        {
+          to: constants.FACTORY_ADDRESS,
+          value: "0",
+          data: factoryContract.interface.encodeFunctionData("createGuard", [
+            safe.safeAddress,
+          ]),
+        },
+      ];
+
+      const ethAdapter = new EthersAdapter({
+        ethers,
+        signerOrProvider: provider,
+      });
+      const safeService = new SafeApiKit({
+        txServiceUrl: constants.GNOSIS_SERVICE,
+        ethAdapter,
+      });
+
+      console.log(safe.safeAddress);
+      // const safeSdk = await Safe.create({
+      //   ethAdapter,
+      //   safeAddress: safe.safeAddress,
+      // });
+      // console.log(safeSdk);
+      // Returns a hash to identify the Safe transaction
+      // const transaction = sdk.safe.
+      const safeTxHash: string = await sdk.txs.send({ txs });
+
+      // const deployTransactionGuard =
+      //   await factoryContract.populateTransaction.createGuard(
+      //     safe.safeAddress
+      //   );
+    }
+  };
 
   return (
     <span>
@@ -29,7 +89,7 @@ export const DeployTransactionGuardModal = () => {
               </ModalHeader>
               <ModalBody>
                 <span>
-                  A new Transaction is proposed to your SAFE to deploy the
+                  This will propose a new Transaction to your SAFE to deploy the
                   guard, please execute it.
                 </span>
               </ModalBody>
@@ -37,8 +97,8 @@ export const DeployTransactionGuardModal = () => {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button color="primary" onPress={onClose}>
-                  Done
+                <Button color="primary" onPress={() => startTransaction(safe)}>
+                  Deploy
                 </Button>
               </ModalFooter>
             </>
