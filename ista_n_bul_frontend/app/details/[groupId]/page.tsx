@@ -2,7 +2,7 @@
 
 import { Button, Divider } from "@nextui-org/react";
 import react, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { title, subtitle } from "@/components/primitives";
 
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/react";
@@ -11,8 +11,40 @@ import { AddOwnerModal } from "@/components/addOwnerModal";
 import { DeleteContractModal } from "@/components/deleteContractModal";
 import { DeleteOwnerModal } from "@/components/deleteOwnerModal";
 
-function DetailsPage() {
+import { ethers } from "ethers";
 
+function DetailsPage(props: { contract: ethers.Contract }) {
+
+    const router = useRouter();
+    const [groupId, setGroupId] = useState(router.query.groupId);
+
+    const allowedContractsColumns = [{
+        key: 'name',
+        label: 'NAME'
+    }, {
+        key: 'address',
+        label: 'ADDRESS'
+    }, {
+        key: 'delete',
+        label: 'DELETE'
+    }];
+
+    const allowedUsersColumns = [{
+        key: 'address',
+        label: 'ADDRESS'
+    }, {
+        key: 'delete',
+        label: 'DELETE'
+    }];
+
+    const fetchData = async () => {
+        try {
+            const data = await contract.getData();
+            console.log(data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
     return (
         <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">

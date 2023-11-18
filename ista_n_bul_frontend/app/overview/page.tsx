@@ -10,12 +10,23 @@ import { DeleteIcon } from "@/components/icons";
 
 import { CreateUserRoleModal } from "@/components/createUserRoleModal";
 
-function SetupPage() {
+import { ethers } from "ethers";
+
+function OverviewPage(props: { contract: ethers.Contract }) {
 
     const [groupId, setGroupId] = useState('');
     const router = useRouter();
 
     const tmpGroupId = 721;
+
+    const fetchData = async () => {
+        try {
+            const data = await contract.getData();
+            console.log(data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
 
     return (
@@ -56,7 +67,7 @@ function SetupPage() {
                         <TableCell>
                             <div className="relative flex items-center gap-2">
                                 <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                                <Button
+                                    <Button
                                         color="default"
                                         variant="ghost"
                                         onClick={() => router.push(`/details/${tmpGroupId}`)}>
@@ -81,4 +92,4 @@ function SetupPage() {
     );
 }
 
-export default SetupPage;
+export default OverviewPage;
