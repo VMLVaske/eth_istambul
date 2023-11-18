@@ -41,7 +41,12 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
         string name;
         bool enabled;
         address[] users;
-        address[] whitelistedContracts;
+        WhitelistedContract[] whitelistedContracts;
+    }
+
+    struct WhitelistedContract {
+        string name;
+        address contractAddress;
     }
 
     struct UserRoleGroupSmall {
@@ -103,23 +108,37 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
     function createRoleGroup(
         string memory name,
         address[] memory users,
-        address[] memory whitelistedContracts
+        WhitelistedContract[] memory whitelistedContracts
     ) external onlyOwner {
-        userGroups[numUserRoleGroups] = UserRoleGroup(name, true, users, whitelistedContracts);
-        emit UserRoleGroupSet(numUserRoleGroups, userGroups[numUserRoleGroups]);
+
         numUserRoleGroups += 1;
+        UserRoleGroup storage group = userGroups[numUserRoleGroups];
+        group.name = name;
+        group.enabled = true;
+        group.users = users;
+        for (uint256 i = 0; i < whitelistedContracts.length; i++) {
+            group.whitelistedContracts.push(WhitelistedContract(whitelistedContracts[i].name, whitelistedContracts[i].contractAddress));
+        }
+        emit UserRoleGroupSet(numUserRoleGroups, userGroups[numUserRoleGroups]);
+
     }
 
     function updateRoleGroup(
         uint256 id,
         string memory name,
         address[] memory users,
-        address[] memory whitelistedContracts
+        WhitelistedContract[] memory whitelistedContracts
     ) external onlyOwner {
         require(id < numUserRoleGroups, "id is out of bounds");
 
-        userGroups[id] = UserRoleGroup(name, true, users, whitelistedContracts);
-        emit UserRoleGroupSet(id, userGroups[id]);
+        UserRoleGroup storage group = userGroups[id];
+        group.name = name;
+        group.enabled = true;
+        group.users = users;
+        for (uint256 i = 0; i < whitelistedContracts.length; i++) {
+            group.whitelistedContracts.push(WhitelistedContract(whitelistedContracts[i].name, whitelistedContracts[i].contractAddress));
+        }
+        emit UserRoleGroupSet(numUserRoleGroups, userGroups[numUserRoleGroups]);
     }
 
     function deleteRoleGroup(uint256 id) external onlyOwner {
@@ -273,7 +292,7 @@ contract RestrictedTransactionGuard is BaseGuard, ISignatureValidatorConstants, 
                         ownerFound = true;
 
                         for (uint256 l = 0; l < userGroups[j].whitelistedContracts.length; l++) {
-                            if (userGroups[j].whitelistedContracts[l] == checkData.targetContract) {
+                            if (userGroups[j].whitelistedContracts[l].contractAddress == checkData.targetContract) {
                                 allowedToExecute = true;
                                 break;
                             }
