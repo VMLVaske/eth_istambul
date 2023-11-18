@@ -59,7 +59,6 @@ function SetupArea(props: { guardAddress: string }) {
 
 function SetupPage(props) {
   const { sdk, connected, safe } = useSafeAppsSDK();
-
   const [guardAddress, setGuardAddress] = useState<string | null>(null);
 
   useEffect(() => {
