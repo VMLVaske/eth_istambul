@@ -12,7 +12,7 @@ function getConstants(chainId: number) {
       };
     case 11155111:
       return {
-        FACTORY_ADDRESS: "0x8Bbb962F72fFF10f7af891efBD67ee56552cf6a6",
+        FACTORY_ADDRESS: "0xBBec230a501448024bEcD8fCb8c4D0d81Bb458B3",
         GNOSIS_SERVICE: "https://safe-transaction-sepolia.safe.global/",
       };
   }
