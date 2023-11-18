@@ -15,6 +15,7 @@ import {
 import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import { DeployTransactionGuardModal } from "@/components/deployTransactionGuardModal";
 import { ApplyTransactionGuardModal } from "@/components/applyTransactionGuardModal";
+import { bold } from "@/components/primitives";
 
 function SetupPage() {
   const router = useRouter();
@@ -34,19 +35,25 @@ function SetupPage() {
         >
           transaction guard
         </a>{" "}
-        to your safe. This happens in two steps. First, we need to deploy your
-        very own transaction guard. In the second step, we need to add the new
+        to your safe. This happens in two steps: </div>
+
+      <div className="items-center justify-center">First, we need to deploy your
+        very own transaction guard.
+        <br />
+        <div className="py-4">
+          <span className={bold()}>Step 1: </span>
+          <DeployTransactionGuardModal />
+        </div>
+      </div>
+      <div>
+        In the second step, we need to add the new
         guard to your safe.
-      </div>
-      <div>
-        <span>Step 1: </span>
-        <DeployTransactionGuardModal />
-      </div>
-      <div>
-        <span>Step 2: </span>
+        <br />
+        <div className="py-4"></div>
+        <span className={bold()}>Step 2: </span>
         <ApplyTransactionGuardModal />
       </div>
-    </div>
+    </div >
   );
 }
 

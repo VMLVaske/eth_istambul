@@ -19,13 +19,13 @@ export const AddContractModal = () => {
 
     return (
         <span>
-            <Button color="primary" onPress={onOpen}>Add Contract</Button>
+            <Button className="button" color="success" onPress={onOpen}>Add Contract</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col gap-1">Add Contract</ModalHeader>
-                            <ModalBody>
+                            <ModalBody className="modalbody">
                                 <Input label="Name" />
                                 <Input
                                     type="string"
@@ -39,7 +39,7 @@ export const AddContractModal = () => {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Cancel
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <Button className="button" color="success" onPress={onClose}>
                                     Add
                                 </Button>
                             </ModalFooter>

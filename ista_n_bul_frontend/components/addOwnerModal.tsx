@@ -9,20 +9,20 @@ export const AddOwnerModal = () => {
 
     return (
         <span>
-            <Button color="primary" onPress={onOpen}>Add Owner</Button>
+            <Button className="button" color="success" onPress={onOpen}>Add Owner</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col gap-1">Add Owner</ModalHeader>
-                            <ModalBody>
+                            <ModalBody className="modalbody">
                                 <Input label="Owner"/>
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Cancel
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <Button className="button" color="success" onPress={onClose}>
                                     Add
                                 </Button>
                             </ModalFooter>

@@ -18,7 +18,7 @@ import { BrowserProvider, ethers } from "ethers";
 import { BaseTransaction } from "@safe-global/safe-apps-sdk";
 import SafeApiKit from "@safe-global/api-kit";
 import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
-import * as Constants from "@/app/constants";
+import {getConstants} from "@/app/constants";
 
 export const DeployTransactionGuardModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -26,7 +26,7 @@ export const DeployTransactionGuardModal = () => {
   const { sdk, connected, safe } = useSafeAppsSDK();
 
   const startTransaction = async (safe: any) => {
-    const constants = Constants.getConstants(safe.chainId);
+    const constants = getConstants(safe.chainId);
 
     if (window.ethereum) {
       await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -39,12 +39,31 @@ export const DeployTransactionGuardModal = () => {
         provider
       );
 
-      const txs: BaseTransaction[] = [
+      console.log("Constants: ", constants);
+
+      const testAddr = "0xE2dF1CAB97737E5534FFDc873B9D507A89D59944"
+
+      console.log("Factory Address: ", constants.FACTORY_ADDRESS);
+      console.log("Factory Contract: ", factoryContract);
+      console.log("Safe address: ", safe.safeAddress)
+      console.log("Data: ", factoryContract.interface.encodeFunctionData("createGuard", [testAddr]));
+
+      /* const txs: BaseTransaction[] = [
         {
           to: constants.FACTORY_ADDRESS,
           value: "0",
           data: factoryContract.interface.encodeFunctionData("createGuard", [
             safe.safeAddress,
+          ]),
+        },
+      ]; */
+
+      const txs: BaseTransaction[] = [
+        {
+          to: constants.FACTORY_ADDRESS,
+          value: "0",
+          data: factoryContract.interface.encodeFunctionData("createGuard", [
+            "0xE2dF1CAB97737E5534FFDc873B9D507A89D59944",
           ]),
         },
       ];
@@ -66,7 +85,9 @@ export const DeployTransactionGuardModal = () => {
       // console.log(safeSdk);
       // Returns a hash to identify the Safe transaction
       // const transaction = sdk.safe.
-      const safeTxHash: string = await sdk.txs.send({ txs });
+      console.log("Sending tx now!")
+      const safeTxHash = await sdk.txs.send({ txs });
+      console.log("Tx sent: ", safeTxHash);
 
       // const deployTransactionGuard =
       //   await factoryContract.populateTransaction.createGuard(
@@ -77,7 +98,7 @@ export const DeployTransactionGuardModal = () => {
 
   return (
     <span>
-      <Button color="primary" onPress={onOpen}>
+      <Button className="button" color="success" onPress={onOpen}>
         Deploy Transaction Guard
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -87,7 +108,7 @@ export const DeployTransactionGuardModal = () => {
               <ModalHeader className="flex flex-col gap-1">
                 Deploying Transaction Guard
               </ModalHeader>
-              <ModalBody>
+              <ModalBody className="modalbody">
                 <span>
                   This will propose a new Transaction to your SAFE to deploy the
                   guard, please execute it.
@@ -97,7 +118,7 @@ export const DeployTransactionGuardModal = () => {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button color="primary" onPress={() => startTransaction(safe)}>
+                <Button className="button" color="success" onPress={() => startTransaction(safe)}>
                   Deploy
                 </Button>
               </ModalFooter>

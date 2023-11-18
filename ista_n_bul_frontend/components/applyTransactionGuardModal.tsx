@@ -17,7 +17,7 @@ export const ApplyTransactionGuardModal = () => {
 
   return (
     <span>
-      <Button color="primary" onPress={onOpen}>
+      <Button className="button" color="success" onPress={onOpen}>
         Apply Guard to your SAFE
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -27,7 +27,7 @@ export const ApplyTransactionGuardModal = () => {
               <ModalHeader className="flex flex-col gap-1">
                 Deploying Transaction Guard
               </ModalHeader>
-              <ModalBody>
+              <ModalBody className="modalbody">
                 <span>
                   A new Transaction is proposed to your SAFE to apply your Guard to your SAFE, please execute it.
                 </span>
@@ -36,7 +36,7 @@ export const ApplyTransactionGuardModal = () => {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button className="button" color="success" onPress={onClose}>
                   Done
                 </Button>
               </ModalFooter>
