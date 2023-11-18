@@ -22,8 +22,6 @@ import factoryAbi from "@/abis/guardFactory.json";
 import guardAbi from "@/abis/transactionGuard.json";
 import { BrowserProvider, ethers } from "ethers";
 
-import { ethers } from "ethers";
-
 function OverviewPage(props: { contract: ethers.Contract }) {
 
     const [groupId, setGroupId] = useState('');
