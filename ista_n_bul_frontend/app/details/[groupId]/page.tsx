@@ -69,6 +69,40 @@ function DetailsPage() {
         console.log("allowedContractsRows: ", allowedContractsRows)
     }, []); */
 
+    const parseTableData = (userGroups: string[]) => {
+        let conData = [];
+        let usrData = [];
+        let contractKey = 1;
+        let userKey = 1;
+
+        console.log("Inside parse Table Data")
+        console.log("userGroups: ", userGroups)
+
+        userGroups.forEach((entry) => {
+            const [username, status, userAddress, contractName, contractAddress] = entry.split(',');
+            conData.push({
+                key: contractKey.toString(),
+                name: contractName,
+                address: contractAddress,
+                delete: <DeleteContractModal />
+            });
+            contractKey++;
+
+            usrData.push({
+                key: userKey.toString(),
+                address: userAddress,
+                delete: <DeleteOwnerModal />
+            });
+            userKey++;
+
+            setAllowedContractsRows(conData);
+            //console.log("allowedContractsRows: ", allowedContractsRows)
+            setAllowedUserRows(usrData);
+            //console.log("allowedUserRows: ", allowedUserRows);
+            //return { contractData, userData };
+        });
+    };
+
     useEffect(() => {
         const execute = async () => {
             console.log("Executing...")
@@ -98,13 +132,14 @@ function DetailsPage() {
                     provider
                 );
                 //console.log("GuardContract: ", guardContract)
-                const userGroups = await guardContract.getRoleGroup(1)
+                const userGroups = await guardContract.getRoleGroup(0)
                 //const userGroups = await guardContract.getRoleGroup(groupId);
                 setUserGroups(userGroups)
-                //console.log("Iser Groups: ", userGroups.toString());
+                console.log("Iser Groups: ", userGroups.toString());
 
                 // ----- data processing for table formatting ----- 
-                let conData = [];
+
+                /* let conData = [];
                 let usrData = [];
                 let contractKey = 1;
                 let userKey = 1;
@@ -131,13 +166,12 @@ function DetailsPage() {
                     setAllowedUserRows(usrData);
                     //console.log("allowedUserRows: ", allowedUserRows);
                     //return { contractData, userData };
-                });
+                }); */
             };
             console.log("Starting to execute...")
-            execute();
         }
         execute();
-    });
+    }, [userGroups]);
 
     return (
         <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
