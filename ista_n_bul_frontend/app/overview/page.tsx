@@ -142,33 +142,6 @@ function OverviewPage(props: any) {
           <CreateUserRoleModal />
         </section>
       )}
-      {/* {
-      isLoading ? (
-        <InfinitySpin width = "200" color = "#12FF80" />;
-      ): (
-        <section className = "flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-          <h1 className = { title() }>User Roles</h1>
-
-          <Table hideHeader aria-label="user roles table">
-            <TableHeader columns={userGroupsColumns}>
-              {(column) => (
-                <TableColumn key={column.key}>{column.label}</TableColumn>
-              )}
-            </TableHeader>
-            <TableBody items={userGroups}>
-              {(item) => (
-                <TableRow key={item.id}>
-                  {(columnKey) => (
-                    <TableCell>{renderCell(item, columnKey)}</TableCell>
-                  )}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          <CreateUserRoleModal />
-        </section >
-      )
-} */}
     </div>
   );
 }
