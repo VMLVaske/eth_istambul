@@ -69,8 +69,11 @@ export default function Home() {
 
   useEffect(() => {
     const initializeProvider = async () => {
+      // @ts-ignore
       if (window.ethereum) {
+        // @ts-ignore
         await window.ethereum.request({ method: "eth_requestAccounts" });
+        // @ts-ignore
         const provider = new BrowserProvider(window.ethereum);
         setProvider(provider);
 
