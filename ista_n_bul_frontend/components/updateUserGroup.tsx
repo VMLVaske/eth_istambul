@@ -51,6 +51,7 @@ export const UpdateUserGroup = (props: { guardAddress: string }) => {
         },
       ];
 
+      // @ts-ignore
       const safeTxHash: string = await sdk.txs.send({ txs });
     }
   };
