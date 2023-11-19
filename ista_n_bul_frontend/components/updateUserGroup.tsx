@@ -26,8 +26,11 @@ export const UpdateUserGroup = (props: { guardAddress: string }) => {
   const startTransaction = async (safe: any, guardAddress: any) => {
     const constants = Constants.getConstants(safe.chainId);
 
+    // @ts-ignore
     if (window.ethereum) {
+      // @ts-ignore
       await window.ethereum.request({ method: "eth_requestAccounts" });
+      // @ts-ignore
       const provider = new BrowserProvider(window.ethereum);
 
       const safeContract = new ethers.Contract(
