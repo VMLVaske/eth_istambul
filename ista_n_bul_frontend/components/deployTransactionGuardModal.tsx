@@ -30,8 +30,11 @@ export const DeployTransactionGuardModal = (props: {
   const startTransaction = async (safe: any) => {
     const constants = Constants.getConstants(safe.chainId);
 
+    // @ts-ignore
     if (window.ethereum) {
+      // @ts-ignore
       await window.ethereum.request({ method: "eth_requestAccounts" });
+      // @ts-ignore
       const provider = new BrowserProvider(window.ethereum);
 
       // console.log(provider);
@@ -53,10 +56,12 @@ export const DeployTransactionGuardModal = (props: {
 
       const ethAdapter = new EthersAdapter({
         ethers,
+        // @ts-ignore
         signerOrProvider: provider,
       });
       const safeService = new SafeApiKit({
         txServiceUrl: constants.GNOSIS_SERVICE,
+        // @ts-ignore
         ethAdapter,
       });
 

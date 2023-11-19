@@ -40,8 +40,11 @@ function OverviewPage(props: any) {
     const execute = async () => {
       const constants = Constants.getConstants(safe.chainId);
 
+      // @ts-ignore
       if (window.ethereum) {
+        // @ts-ignore
         await window.ethereum.request({ method: "eth_requestAccounts" });
+        // @ts-ignore
         const provider = new BrowserProvider(window.ethereum);
 
         const factoryContract = new ethers.Contract(

@@ -48,6 +48,7 @@ export const AddOwnerModal = ({ onAdd }) => {
                   label="Select an owner"
                   labelPlacement="outside-left"
                   className="max-w-xs"
+                  // @ts-ignore
                   onSelectionChange={setAddress}
                 >
                   {safe.owners.map((owner) => (

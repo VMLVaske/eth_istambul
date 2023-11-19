@@ -29,8 +29,11 @@ export const CreateUserRoleModal = () => {
   const startTransaction = async (safe: any) => {
     const constants = Constants.getConstants(safe.chainId);
 
+    // @ts-ignore
     if (window.ethereum) {
+      // @ts-ignore
       await window.ethereum.request({ method: "eth_requestAccounts" });
+      // @ts-ignore
       const provider = new BrowserProvider(window.ethereum);
 
       // console.log(provider);
@@ -47,6 +50,7 @@ export const CreateUserRoleModal = () => {
         provider
       );
 
+      // @ts-ignore
       const txs: BaseTransaction[] = [
         {
           to: guardAddress,
