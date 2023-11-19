@@ -61,21 +61,9 @@ export const DeployTransactionGuardModal = (props: {
       });
 
       console.log(safe.safeAddress);
-      // const safeSdk = await Safe.create({
-      //   ethAdapter,
-      //   safeAddress: safe.safeAddress,
-      // });
-      // console.log(safeSdk);
-      // Returns a hash to identify the Safe transaction
-      // const transaction = sdk.safe.
       console.log("Sending tx now!");
       const safeTxHash = await sdk.txs.send({ txs });
       console.log("Tx sent: ", safeTxHash);
-
-      // const deployTransactionGuard =
-      //   await factoryContract.populateTransaction.createGuard(
-      //     safe.safeAddress
-      //   );
     }
   };
 
