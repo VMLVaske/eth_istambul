@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EthIstanbul Hackathon Project: Safe Defender
 
-## Getting Started
+## Frontend
+[Demo on Vercel](https://portofrontend-on30eonds-vmlvaske.vercel.app)
 
-First, run the development server:
+## Backend
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Prizes & Hashes
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[Gnosis Chain Track](https://gnosisscan.io/tx/0xa954953633dd143ae58c721f07f8ed8afd8396383d2e2028ab7ab0a904901bf7)
+[Base](https://basescan.org/tx/0x5c21d7c60d224f02a0f47be8e1c8584bdc2a02eefc971145236395748dc07cf7)
+[Arbitum](https://arbiscan.io/tx/0x47687d4927ef8d1a163edfb849f003a0242df07df925238ad15301f94b165a99)
+[Celo](https://explorer.celo.org/mainnet/address/0xB33Eb7d2DF18029918Ec0918C7D5149Cc0Ff81Ac)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Idea
+A module in SAFE that allows role management for DAOs. That's it. 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Use Case Idea
+Imagine you're a company and you go to a hackathon and you set up a safe so that you can give mainnet token to exhausted hackers. Maybe you want to set some rules about that, so that not everybody who's an owner of the big safe can actually execute transactions?
